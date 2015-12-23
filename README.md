@@ -174,4 +174,37 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
 "clientId":"es"  
 }
 
+    别忘了请求头中带上token。
+    
+按上述数据的格式发送请求以后，来自IoT的响应体可能如下所示：
+
+>{  
+    "id": 179,  
+    "userName": "f69101b8-ee03-4fd1-b9e4-16644e2f8645",  
+    "passWord": "lPnIiaxj",  
+    "status": 1,  
+    "projectId": 331,  
+    "type": "device",  
+    "createTime": "2015-12-23 09:07:53",  
+    "updateTime": null,  
+    "alias": "this is a t",  
+    "description": "cloud",  
+    "tenantId": 20,  
+    "mqttPermisionLevel": "project",  
+    "mqttPermission": [  
+        "mqtt:eastsoft:*:*:connection",  
+        "mqtt:eastsoft:*:*:subscription",  
+        "mqtt:eastsoft:*:*:publish"  
+    ],  
+    "roles": [  
+        7,  
+        8  
+    ],  
+    "groupName": "haGroup",  
+    "clientId": "es"  
+}
+
+上述数据中，最值得注意的是userName和passWord。请务必确保你的数据库存下了IoT返回的userName和passWord，这是IoT为你的设备自动生成的随机用户名和密码。你的设备只需要带着这对用户名和密码去访问接入平台就能够进行IoT的权限验证。
+
+进行权限验证~~connection、publish
 
