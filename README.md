@@ -35,7 +35,7 @@ IoT的租户可以进行哪些操作？
 
 如果你需要通过自己的应用来注册一个IoT帐号，你只需要按照下面的URL来发送请求即可：  
 
-    /V1/tenantportal/private/tenant
+>/V1/tenantportal/private/tenant
 
 在发送的请求的请求体中，你需要按照下面的样例来组织数据：  
 
