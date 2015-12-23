@@ -19,6 +19,7 @@ IoT租户门户的权限系统主要包含以下组成部分：
 * 注册租户
 * 租户登录IoT
 * 租户访问API
+* 注销
 
 ###注册租户
 
@@ -58,7 +59,7 @@ I'm always online
 
 访问该URL需要以POST的方式，但是你不需要在请求体当中携带任何数据。你的用户名和密码可以通过写在请求头中发送到IoT。之后IoT就会分别从名为username和password的请求头中获取你的用户名和密码，完成登录操作。  
 
-IoT会首先匹配你的用户名和密码信息，如果它们是正确的，IoT就会将用户名所对应的帐号信息作为相应体返回给您。同时IoT会进行一系列的计算，并最终为你的生成一个token。token是一个长字符串，它被存放在名为token的响应头中。
+IoT会首先匹配你的用户名和密码信息，如果它们是正确的，IoT就会将用户名所对应的租户信息作为相应体返回给您。同时IoT会进行一系列的计算，并最终为你的生成一个token。token是一个长字符串，它被存放在IoT的缓存中，并附在名为token的响应头中跟随租户信息返回。
 
 >注意：  
 用来登录的用户名和密码必须是你通过IoT的注册服务为自己申请的用户名和密码，不能是你在IoT中为你的设备申请的用户名和密码或者已经失效的用户名和密码，否则你发出的请求最终会以收到状态码为500的HTTP响应而告终。  
@@ -146,6 +147,31 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
 
 >注意：  为了使你的应用能够在租户登录以后持续访问IoT，你必须设计你的程序使之在每次的IoT请求以后，更新下次的请求头中的token。否则应用程序可能需要不停地进行登录操作来获得IoT访问的权限。
 
+###注销
+
 ##设备接入的权限系统
+
+相对于租户门户的权限系统，设备接入的权限系统就要显得简单很多。
+
+设备要接入IoT首先要租户登录到IoT平台才能获得创建设备接入凭证的相关权限。
+
+登录完成后，可以按照如下所示的URL发送创建设备接入凭证的请求：
+
+    /V1/iotplatform/public/credential
+    
+该接口需要以POST方式请求。请求体中的数据可以组织如下：
+
+>{  
+"projectId":331,  
+"type":"device",  
+"alias":"this is a t",  
+"description":"cloud",  
+"tenantId":20,  
+"mqttPermisionLevel":"project",  
+"mqttPermission":["mqtt:eastsoft:*:*:connection","mqtt:eastsoft:*:*:subscription","mqtt:eastsoft:*:*:publish"],  
+"roles":[7,8],  
+"groupName":"haGroup",  
+"clientId":"es"  
+}
 
 
