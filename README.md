@@ -167,6 +167,8 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
 你是谁的某某某  
 若是再见只会让人更难受  
 
+登出以后，再次访问IoT的API需要重新登录。
+
 >如果你的帐号有可能被多点登录，那么你也不需要担心一处登录的注销操作会对其他处的登录者造成影响。如果你用你的帐号发送两次登录请求，你会发现你得到的是两个不同的token。当你使用其中的一个token发出登出请求后，另一个token仍然能够继续进行IoT的各种访问。登出操作作用的对象只是token级别的。这就保证了一处登录的注销操作不会影响到其他处的登录者。
 
 
@@ -188,34 +190,33 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
 "alias":"this is a t",  
 "description":"cloud",  
 "tenantId":20,  
-"mqttPermisionLevel":"project",  
-"mqttPermission":["mqtt:eastsoft:*:*:connection","mqtt:eastsoft:*:*:subscription","mqtt:eastsoft:*:*:publish"],  
+"mqttPermissionLevel":"project",  
+"mqttPermission":["connection","publish"],  
 "roles":[7,8],  
 "groupName":"haGroup",  
 "clientId":"es"  
-}
+}  
 
     别忘了请求头中带上token。
     
 按上述数据的格式发送请求以后，来自IoT的响应体可能如下所示：
 
 >{  
-    "id": 179,  
-    "userName": "f69101b8-ee03-4fd1-b9e4-16644e2f8645",  
-    "passWord": "lPnIiaxj",  
+    "id": 192,  
+    "userName": "ddec8c47-4899-49b7-b8ac-b8807c2d9564",  
+    "passWord": "83KrdLkB",  
     "status": 1,  
     "projectId": 331,  
     "type": "device",  
-    "createTime": "2015-12-23 09:07:53",  
+    "createTime": "2015-12-25 09:16:59",  
     "updateTime": null,  
     "alias": "this is a t",  
     "description": "cloud",  
     "tenantId": 20,  
-    "mqttPermisionLevel": "project",  
+    "mqttPermissionLevel": "project",  
     "mqttPermission": [  
-        "mqtt:eastsoft:*:*:connection",  
-        "mqtt:eastsoft:*:*:subscription",  
-        "mqtt:eastsoft:*:*:publish"  
+        "connection",  
+        "publish"  
     ],  
     "roles": [  
         7,  
@@ -223,9 +224,13 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
     ],  
     "groupName": "haGroup",  
     "clientId": "es"  
-}
+}  
 
-上述数据中，最值得注意的是userName和passWord。请务必确保你的数据库存下了IoT返回的userName和passWord，这是IoT为你的设备自动生成的随机用户名和密码。你的设备只需要带着这对用户名和密码去访问接入平台就能够进行IoT的权限验证。
+上述IoT返回的数据中，最值得注意的是userName和passWord。请务必确保你的数据库存下了IoT返回的userName和passWord，这是IoT为你的设备自动生成的随机用户名和密码。你的设备只能带着这对用户名和密码去访问接入平台才能够进行IoT的权限验证。
 
-进行权限验证~~connection、publish
+现在我们回头来看一看进行请求的数据。
+
+首先请求体中的type属性非常重要，由于这是一个为设备接入而创建的凭证，所以请务必保证该字段你填写的是“device”，而不是其他的任何字符串。
+
+请求中的alias代表的是将要创建的凭证的别名，这是一个必须的属性。description作为你对该凭证的描述是非必须的属性。接下来的三个属性projectId、groupName和clientId联合起来将确认该凭证是为哪一个已经登记在IoT上的设备而创建。而mqttPermissionLevel将为该凭证确认其生效级别————IoT的设备接入凭证有三个默认的生效级别， 分别是
 
