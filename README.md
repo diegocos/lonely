@@ -74,9 +74,9 @@ IoT会首先匹配你的用户名和密码信息，如果它们是正确的，Io
 IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将下列数据组织在POST请求的请求体中:
 
 >{  
-"name":"测试工程39dcxw08",  
-"description":"用来测试token的测试工程",  
-"tenantId":"20"  
+    "name":"测试工程39dcxw08",  
+    "description":"用来测试token的测试工程",  
+    "tenantId":"20"  
 }  
 
 正如上面的数据格式所显示的那样，name属性和description属性的内容可以随意填写，而tenantId这一属性需要填写刚才你通过注册获得的租户信息中给出的tenantId。
@@ -185,16 +185,16 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
 该接口需要以POST方式请求。请求体中的数据可以组织如下：
 
 >{  
-"projectId":331,  
-"type":"device",  
-"alias":"this is a t",  
-"description":"cloud",  
-"tenantId":20,  
-"mqttPermissionLevel":"project",  
-"mqttPermission":["connection","publish"],  
-"roles":[7,8],  
-"groupName":"haGroup",  
-"clientId":"es"  
+    "projectId":331,  
+    "type":"device",  
+    "alias":"this is a t",  
+    "description":"cloud",  
+    "tenantId":20,  
+    "mqttPermissionLevel":"project",  
+    "mqttPermission":["connection","publish"],  
+    "roles":[7,8],  
+    "groupName":"haGroup",  
+    "clientId":"es"  
 }  
 
 别忘了请求头中带上token。
