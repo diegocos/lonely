@@ -40,16 +40,31 @@ IoT的租户可以进行哪些操作？
 
 在发送的请求的请求体中，你需要按照下面的样例来组织数据：  
 
->开始倒数3，2，1  
-删除我的孤单  
-more and more 尽是深刻
+>{  
+"userName":"gotze",  
+"passWord":"123456y",  
+"email":"sunyanzi@gmail.com"  
+}  
 
 需要注意的是，该URL需要以POST的方式发送。
 
 按照规定的格式准备好HTTP的请求以后，你就可以向IoT发送该请求。之后你将得到来自IoT的HTTP响应。响应体中的数据可能如下所示：  
 
->爱亮了，爱笑了  
-I'm always online
+>{  
+    "id": 1007,  
+    "name": "gotze",  
+    "email": "sunyanzi@gmail.com",  
+    "phone": null,  
+    "tenantCreateTime": "2015-12-26 04:00:02",  
+    "tenantUpdateTime": "2015-12-26 04:00:03",  
+    "credentialId": 1007,  
+    "userName": "gotze",  
+    "passWord": "e37f03e3844db573efbf0c388e8915c6",  
+    "type": "user",  
+    "credentialCreateTime": "2015-12-26 04:00:02",  
+    "credentialUpdateTime": null,  
+    "tenantId": 107,  
+}  
 
 ###租户登录IoT
 
