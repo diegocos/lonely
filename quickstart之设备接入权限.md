@@ -1,2 +1,9 @@
 #设备接入权限
 
+你的设备需要接入IoT，必须携带IoT颁发的username和password才能够实现。如果你想要让你的设备接入IoT，你就必须先登录到IoT，之后通过IoT的HTTP接口或者前端服务封装的功能来为你的设备创建合适的凭证，从而获得IoT颁发的username和password。
+
+你需要为你的设备创建的证书中有两个比较重要的属性分别是MQTT权限的级别以及MQTT权限的种类。如果你是通过HTTP接口来创建设备的证书，那么这两个属性分别对应的名称是mqttPermissionLevel和mqttPermission。
+
+MQTT权限的级别即mqttPermissionLevel，决定了使用该凭证的设备所能够发布和订阅的主题的级别：
+
+* device级别：使用该凭证的设备所能够发布和订阅的主题必须
