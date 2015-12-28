@@ -41,30 +41,55 @@ IoT的租户可以进行哪些操作？
 在发送的请求的请求体中，你需要按照下面的样例来组织数据：  
 
 >{  
-"userName":"gotze",  
+"userName":"diago",  
 "passWord":"123456y",  
-"email":"sunyanzi@gmail.com"  
+"email":"diago@gmail.com"  
 }  
 
 需要注意的是，该URL需要以POST的方式发送。
 
 按照规定的格式准备好HTTP的请求以后，你就可以向IoT发送该请求。之后你将得到来自IoT的HTTP响应。响应体中的数据可能如下所示：  
 
->{  
-    "id": 1007,  
-    "name": "gotze",  
-    "email": "sunyanzi@gmail.com",  
+>{
+    "id": 1008,  
+    "name": "diago",  
+    "tenantDescription": null,  
+    "organization": null,  
+    "code": null,  
+    "level": 0,  
+    "contact": null,  
+    "email": "diago@gmail.com",  
+    "tenantStatus": 0,  
     "phone": null,  
-    "tenantCreateTime": "2015-12-26 04:00:02",  
-    "tenantUpdateTime": "2015-12-26 04:00:03",  
-    "credentialId": 1007,  
-    "userName": "gotze",  
+    "tenantCreateTime": "2015-12-28 01:06:16",  
+    "tenantUpdateTime": "2015-12-28 01:06:18",  
+    "credentialId": 1008,  
+    "userName": "diago",  
     "passWord": "e37f03e3844db573efbf0c388e8915c6",  
+    "credentialStatus": 0,  
+    "projectId": 0,  
     "type": "user",  
-    "credentialCreateTime": "2015-12-26 04:00:02",  
+    "credentialCreateTime": "2015-12-28 01:06:17",  
     "credentialUpdateTime": null,  
-    "tenantId": 107,  
+    "alias": null,  
+    "credentialDescription": null,  
+    "tenantId": 108,  
+    "mqttPermissionLevel": null,  
+    "mqttPermission": null  
 }  
+
+完成上述操作以后，请检查你刚刚注册请求时所使用的邮箱的收件箱，收件箱中会有一封来IoT的邮件，邮件的中文中会有一个链接，你可以直接点击这个链接完成注册，当然你也可以直接使用HTTP请求访问如下链接：
+
+    /V1/tenantportal/private/tenant/{email}/activation/{authCode}
+    
+URL中的email参数就填写刚才注册使用的email地址，而authCode则填写IoT发送的邮件正文中的激活码。按照以上的格式发送GET请求之后，你也许会得到以下内容的响应体：
+
+>{  
+    "tenantId": 108  
+}  
+
+这个时候，刚刚注册的租户信息才真正的可以正常使用了，接下来就让我们用这个租户的信息来进行登录的操作吧。
+
 
 ###租户登录IoT
 
@@ -166,21 +191,15 @@ IoT创建工程的HTTP接口是/V1/tenantportal/public/project。现在我们将
 
 按照要求将当前使用的token放在请求头中，并发送请求后，你可能会收到如下的响应：
 
->挫折和离别不过是声明中的点缀  
-过了多年我才读懂了家人的眼泪  
-发现原来自己没有说再见的勇气  
-离别的伤感，感染了满城的空气  
+>1  
 
 为了验证是否成功地登出了，我们可以用刚才使用的token去访问IoT的API。以查看工程信息为例。
 
 你收到的来自IoT的错误响应应当如下所示，错误码为401：
 
->没有我以后  
-一个人少喝点酒  
-窗台外的衣服有没有人来收  
-以后的以后  
-你是谁的某某某  
-若是再见只会让人更难受  
+>{  
+    "result": "invalid token"  
+}  
 
 登出以后，再次访问IoT的API需要重新登录。
 
